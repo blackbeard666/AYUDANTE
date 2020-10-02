@@ -3,3 +3,6 @@
 
 ## TO-DO
 	- add commands
+
+## DONE
+	- grant role from reacting to bot message
