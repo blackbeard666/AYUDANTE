@@ -1,21 +1,20 @@
 import emoji
 
 import discord
-from discord.ext.commands import Bot
+from discord.ext import commands
 
-client = discord.Client()
-bot = Bot('--')
+bot = commands.Bot(command_prefix = '--')
 
-@client.event
+@bot.event
 async def on_ready():
-    print('[i] Logged in as: {}'.format(client.user))
+    print('[i] Logged in as: {}'.format(bot.user))
 
     kartilya_channel_id = 760413269059043359
-    channel = client.get_channel(kartilya_channel_id)
+    channel = bot.get_channel(kartilya_channel_id)
 
     #: purge the channel of past messages
     def is_bot_message(message):
-    	return message.author == client.user
+    	return message.author == bot.user
 
     deleted_messages = await channel.purge(limit = 100, check = is_bot_message)
     print('[*] Deleted {} message/s'.format(len(deleted_messages)))
@@ -27,7 +26,7 @@ async def on_ready():
 
     #: reaction-based role assignment here
     while True:
-    	reaction, user = await client.wait_for('reaction_add')
+    	reaction, user = await bot.wait_for('reaction_add')
 
     	#: only accept :blood:, continue loop otherwise
     	if emoji.demojize(reaction.emoji) != ':drop_of_blood:':
@@ -45,11 +44,11 @@ async def on_ready():
     		except:
     			print('[-] Failed to assign KATIPON role to {}'.format(user.name))
 
-@client.event
+@bot.event
 async def on_message(message):
 
 	#: if message is made by bot
-    if message.author == client.user:
+    if message.author == bot.user:
     	return
 
     if message.content.startswith('--hello'):
@@ -60,5 +59,13 @@ async def on_message(message):
     	pass
 
 
+#: create test command
+#: status: doesn't run, continue another time
+@bot.command()
+async def info(ctx):
+	print('[+] Calling info')
+	await ctx.send('[i] Channel: {}'.format(ctx.channel))
+	await ctx.send('[i] Resource used: https://medium.com/better-programming/how-to-make-discord-bot-commands-in-python-2cae39cbfd55')
+
 #: place token here
-client.run(token)
+bot.run(token)
