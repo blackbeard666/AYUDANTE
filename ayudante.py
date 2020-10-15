@@ -3,7 +3,9 @@ import emoji
 import discord
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix = '--')
+intents = discord.Intents.default()
+intents.members = True
+bot = commands.Bot(command_prefix = '--', intents = intents)
 
 @bot.event
 async def on_ready():
@@ -61,11 +63,11 @@ async def on_message(message):
 
 #: create test command
 #: status: doesn't run, continue another time
-@bot.command()
+@bot.command(name = 'info')
 async def info(ctx):
 	print('[+] Calling info')
-	await ctx.send('[i] Channel: {}'.format(ctx.channel))
+	#await ctx.send('[i] Channel: {}'.format(ctx.channel))
 	await ctx.send('[i] Resource used: https://medium.com/better-programming/how-to-make-discord-bot-commands-in-python-2cae39cbfd55')
 
 #: place token here
-bot.run(token)
+bot.run("NzYwNTI5NDIzOTMzMjQzNDIy.X3NYOA.Bflvg-EQW2iLJvhDyQIdFTgWLhI")
