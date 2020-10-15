@@ -3,7 +3,8 @@ import emoji
 import discord
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix = '--')
+intent = discord.Intent.default()
+bot = commands.Bot(command_prefix = '--', intents = intent)
 
 @bot.event
 async def on_ready():
