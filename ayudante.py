@@ -3,9 +3,14 @@ import emoji
 import discord
 from discord.ext import commands
 
+<<<<<<< HEAD
 intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(command_prefix = '--')
+=======
+intent = discord.Intent.default()
+bot = commands.Bot(command_prefix = '--', intents = intent)
+>>>>>>> ab3327a1a08d0ae2608f840e16a6b37d8b7edf53
 
 #: some variables here, description update later
 server_id = 760398919636877313
