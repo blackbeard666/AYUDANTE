@@ -5,7 +5,10 @@ from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.members = True
-bot = commands.Bot(command_prefix = '--', intents = intents)
+bot = commands.Bot(command_prefix = '--')
+
+#: some variables here, description update later
+server_id = 760398919636877313
 
 @bot.event
 async def on_ready():
@@ -20,6 +23,14 @@ async def on_ready():
 
     deleted_messages = await channel.purge(limit = 100, check = is_bot_message)
     print('[*] Deleted {} message/s'.format(len(deleted_messages)))
+
+    #: todo: add category permissions similar to LOBBY
+    #: create a CTF category
+    server = bot.get_guild(server_id)
+    if 'CTF' not in [category.name for category in server.categories]:
+    	ctf_category = await server.create_category('CTF')
+    	await ctf_category.create_text_channel('ctf-main')
+    	print('[*] CTF category created')
 
     #: send rules to #kartilya   
     kartilya_rules = open('kartilya.md', 'r').read()    
@@ -46,28 +57,21 @@ async def on_ready():
     		except:
     			print('[-] Failed to assign KATIPON role to {}'.format(user.name))
 
-@bot.event
-async def on_message(message):
+@bot.command()
+async def info(ctx, *args):
+	await ctx.send('[i] Channel: {}'.format(ctx.channel))
+	await ctx.send(args)
 
-	#: if message is made by bot
-    if message.author == bot.user:
-    	return
+#: todo: add error messages
+@bot.command(name = 'ctf-channel')
+async def add_ctf(ctx, ctf_name):
 
-    if message.content.startswith('--hello'):
-        await message.channel.send('Hello!')
-    elif message.content.startswith('--test'):
-    	await message.channel.send('This is a test')
-    else:
-    	pass
+	#: check if command was sent from CTF category
+	if ctx.channel.name != 'ctf-main':
+		await ctx.send('`[-] Use this command on the #ctf-main channel only`')
+		return
 
-
-#: create test command
-#: status: doesn't run, continue another time
-@bot.command(name = 'info')
-async def info(ctx):
-	print('[+] Calling info')
-	#await ctx.send('[i] Channel: {}'.format(ctx.channel))
-	await ctx.send('[i] Resource used: https://medium.com/better-programming/how-to-make-discord-bot-commands-in-python-2cae39cbfd55')
+	await ctx.channel.category.create_text_channel(ctf_name)
 
 #: place token here
-bot.run("NzYwNTI5NDIzOTMzMjQzNDIy.X3NYOA.Bflvg-EQW2iLJvhDyQIdFTgWLhI")
+bot.run(token)

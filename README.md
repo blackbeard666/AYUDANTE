@@ -2,7 +2,10 @@
 #### a side project; readme to be updated later
 
 ## TO-DO
-	- add commands
+	- change created CTF category permissions
+	- figure out error handling with bot commands
 
 ## DONE
-	- grant role from reacting to bot message
+	- grant entry role from reacting to bot message
+	- successfully created and called bot commands
+	- create a CTF category upon startup
