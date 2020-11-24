@@ -60,10 +60,12 @@ async def on_ready():
     		except:
     			print('[-] Failed to assign KATIPON role to {}'.format(user.name))
 
-@bot.command()
+@bot.command(name = 'info')
 async def info(ctx, *args):
-	await ctx.send('[i] Channel: {}'.format(ctx.channel))
-	await ctx.send(args)
+	await ctx.send('`[i] Channel: {}`'.format(ctx.channel))
+	
+	#: test to create an Embed object
+	await ctx.send(embed = discord.Embed(title = 'Test Title', description = 'Testing out how embeds work', colour = 0x2ecc71))
 
 #: todo: add error messages
 @bot.command(name = 'ctf-channel')
