@@ -86,4 +86,4 @@ async def end_ctf(ctx):
 		await ctx.channel.delete()
 
 #: place token here
-bot.run("NzYwNTI5NDIzOTMzMjQzNDIy.X3NYOA.nDyGROifGveCHF-z5qcarRoIlDk")
+bot.run(token)
