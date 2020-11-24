@@ -3,7 +3,7 @@ import emoji
 import discord
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix = '--', intents = intent)
+bot = commands.Bot(command_prefix = '--')
 
 #: some variables here, description update later
 server_id = 760398919636877313
@@ -26,9 +26,14 @@ async def on_ready():
     #: create a CTF category
     server = bot.get_guild(server_id)
     if 'CTF' not in [category.name for category in server.categories]:
+
     	ctf_category = await server.create_category('CTF')
-    	await ctf_category.create_text_channel('ctf-main')
-    	print('[*] CTF category created')
+
+    	if ctf_category:
+    		print('[*] CTF category created')
+
+    	ctf_main_channel = await ctf_category.create_text_channel('ctf-main')
+    	await ctf_main_channel.edit(topic = 'Main CTF Lobby')
 
     #: send rules to #kartilya   
     kartilya_rules = open('kartilya.md', 'r').read()    
@@ -71,5 +76,14 @@ async def add_ctf(ctx, ctf_name):
 
 	await ctx.channel.category.create_text_channel(ctf_name)
 
+#: todo: add archiving logic here
+@bot.command(name = 'end-ctf')
+async def end_ctf(ctx):
+
+	#: check if channel is in CTF category before deletion
+	if ctx.channel.category.name == 'CTF' and ctx.channel.name != 'ctf-main':
+		print('[-] Deleting channel: ' + ctx.channel.name)
+		await ctx.channel.delete()
+
 #: place token here
-bot.run(token)
+bot.run("NzYwNTI5NDIzOTMzMjQzNDIy.X3NYOA.nDyGROifGveCHF-z5qcarRoIlDk")
