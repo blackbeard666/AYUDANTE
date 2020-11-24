@@ -85,5 +85,6 @@ async def end_ctf(ctx):
 		print('[-] Deleting channel: ' + ctx.channel.name)
 		await ctx.channel.delete()
 
-#: place token here
+#: instead of manually removing tokens in each commit
+token = open('../Desktop/token').read()
 bot.run(token)
