@@ -36,8 +36,9 @@ async def on_ready():
     	await ctf_main_channel.edit(topic = 'Main CTF Lobby')
 
     #: send rules to #kartilya   
-    kartilya_rules = open('kartilya.md', 'r').read()    
-    rule_msg = await channel.send(kartilya_rules)
+    #kartilya_rules = open('kartilya.md', 'r').read() 
+    kartilya_rules = discord.Embed(title = 'KARTILYA', description = 'insert entry rules here', colour = 0x1f8b4c)   
+    rule_msg = await channel.send(embed = kartilya_rules)
     await rule_msg.add_reaction(emoji.emojize(':drop_of_blood:'))
 
     #: reaction-based role assignment here
