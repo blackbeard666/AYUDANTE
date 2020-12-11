@@ -9,3 +9,4 @@
 	- grant entry role from reacting to bot message
 	- successfully created and called bot commands
 	- create a CTF category upon startup
+	- this works
