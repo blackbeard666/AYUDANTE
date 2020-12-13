@@ -1,5 +1,5 @@
 ## AYUDANTE
-#### a side project; readme to be updated later
+#### a side project aimed at creating a fully functional discord bot for ctf management; readme to be updated later
 
 ## TO-DO
 	- change created CTF category permissions
@@ -9,4 +9,4 @@
 	- grant entry role from reacting to bot message
 	- successfully created and called bot commands
 	- create a CTF category upon startup
-	- this works
+	- organize functions into cogs
