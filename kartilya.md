@@ -1,5 +1,5 @@
-```
-		KARTILYA: sa may nasang sumanib sa katipunang ito
+
+		*KARTILYA*: **sa may nasang sumanib sa katipunang ito**
 	---------------------------------------------------------
 
 	MGA PATAKARAN:
@@ -19,4 +19,3 @@
 		5. insert rule here
 
 	Kapag nabasa mo na ang mga patakaran at tungkulin na dapat mong gampanan, maaaring lagdaan mo ang mensahe na ito gamit ang iyong dugo upang maatasan bilang KATIPON at magpatuloy na.
-```

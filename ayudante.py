@@ -1,6 +1,7 @@
 import emoji
 
 import discord
+import ctf_manager
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix = '--')
@@ -8,9 +9,8 @@ bot = commands.Bot(command_prefix = '--')
 #: some variables here, description update later
 server_id = 760398919636877313
 
-@bot.event
-async def on_ready():
-    print('[i] Logged in as: {}'.format(bot.user))
+#: helper functions here
+async def init_kartilya():
 
     kartilya_channel_id = 760413269059043359
     channel = bot.get_channel(kartilya_channel_id)
@@ -22,22 +22,9 @@ async def on_ready():
     deleted_messages = await channel.purge(limit = 100, check = is_bot_message)
     print('[*] Deleted {} message/s'.format(len(deleted_messages)))
 
-    #: todo: add category permissions similar to LOBBY
-    #: create a CTF category
-    server = bot.get_guild(server_id)
-    if 'CTF' not in [category.name for category in server.categories]:
-
-    	ctf_category = await server.create_category('CTF')
-
-    	if ctf_category:
-    		print('[*] CTF category created')
-
-    	ctf_main_channel = await ctf_category.create_text_channel('ctf-main')
-    	await ctf_main_channel.edit(topic = 'Main CTF Lobby')
-
     #: send rules to #kartilya   
-    #kartilya_rules = open('kartilya.md', 'r').read() 
-    kartilya_rules = discord.Embed(title = 'KARTILYA', description = 'insert entry rules here', colour = 0x1f8b4c)   
+    rules = open('kartilya.md', 'r').read() 
+    kartilya_rules = discord.Embed(title = 'KARTILYA', description = rules, colour = 0x1e002a)   
     rule_msg = await channel.send(embed = kartilya_rules)
     await rule_msg.add_reaction(emoji.emojize(':drop_of_blood:'))
 
@@ -57,37 +44,35 @@ async def on_ready():
     		#: assign KATIPON role
     		try:
     			await user.add_roles(katipon_role)
-    			print('[*] KATIPON role assigned to {}'.format(user.name))
+    			print(f'[*] KATIPON role assigned to {user.name}')
     		except:
-    			print('[-] Failed to assign KATIPON role to {}'.format(user.name))
+    			print(f'[-] Failed to assign KATIPON role to {user.name}')
 
-@bot.command(name = 'info')
-async def info(ctx, *args):
-	await ctx.send('`[i] Channel: {}`'.format(ctx.channel))
-	
-	#: test to create an Embed object
-	await ctx.send(embed = discord.Embed(title = 'Test Title', description = 'Testing out how embeds work', colour = 0x2ecc71))
+#: main bot functions
+@bot.event
+async def on_ready():
+    print('[i] Logged in as: {}'.format(bot.user))
 
-#: todo: add error messages
-@bot.command(name = 'ctf-channel')
-async def add_ctf(ctx, ctf_name):
+    #: let server owners decide if they want to add the rules channel
+    '''enable_kartilya = input("[-] Enable kartilya channel? [enable/disable]: ")
+                if enable_kartilya.lower().strip() == "enable":
+                	await init_kartilya()'''
 
-	#: check if command was sent from CTF category
-	if ctx.channel.name != 'ctf-main':
-		await ctx.send('`[-] Use this command on the #ctf-main channel only`')
-		return
+    #: todo: add category permissions similar to LOBBY
+    #: I don't understand why placing this server variable outside of this function fails to get the server
+    server = bot.get_guild(server_id)
+    if 'WARZONE' not in [category.name for category in server.categories]:
 
-	await ctx.channel.category.create_text_channel(ctf_name)
+    	ctf_category = await server.create_category('WARZONE')
 
-#: todo: add archiving logic here
-@bot.command(name = 'end-ctf')
-async def end_ctf(ctx):
+    	if ctf_category:
+    		print('[*] CTF category created')
 
-	#: check if channel is in CTF category before deletion
-	if ctx.channel.category.name == 'CTF' and ctx.channel.name != 'ctf-main':
-		print('[-] Deleting channel: ' + ctx.channel.name)
-		await ctx.channel.delete()
+    	ctf_main_channel = await ctf_category.create_text_channel('garrison')
+    	await ctf_main_channel.edit(topic = 'Main CTF Lobby')
+
 
 #: instead of manually removing tokens in each commit
 token = open('../Desktop/token').read()
+bot.add_cog(ctf_manager.Management(bot))
 bot.run(token)
