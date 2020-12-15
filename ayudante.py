@@ -51,13 +51,11 @@ async def init_kartilya():
 #: main bot functions
 @bot.event
 async def on_ready():
-    print('[i] Logged in as: {}'.format(bot.user))
+    print(f'[i] Logged in as: {bot.user}')
 
-    #: let server owners decide if they want to add the rules channel
-    '''enable_kartilya = input("[-] Enable kartilya channel? [enable/disable]: ")
-                if enable_kartilya.lower().strip() == "enable":
-                	await init_kartilya()'''
-
+    #: ISSUE: calling init_kartilya prevents further code from being interpreted
+    #: await init_kartilya()
+    
     #: todo: add category permissions similar to LOBBY
     #: I don't understand why placing this server variable outside of this function fails to get the server
     server = bot.get_guild(server_id)
@@ -66,13 +64,19 @@ async def on_ready():
     	ctf_category = await server.create_category('WARZONE')
 
     	if ctf_category:
-    		print('[*] CTF category created')
+    		print('[*] CTF WARZONE category created')
 
-    	ctf_main_channel = await ctf_category.create_text_channel('garrison')
+    	ctf_main_channel = await ctf_category.create_text_channel('ctf-barracks')
     	await ctf_main_channel.edit(topic = 'Main CTF Lobby')
 
+    #: Change bot presence, just for fanciness. 
+    #: Might need to change this later to something more suitable
+    print('[*] Changing bot presence')
+    await bot.change_presence(status = discord.Status.dnd, activity = discord.Game(name = "send @BLACKBEARD smoll-medium anime tiddies uwu"))
+
+#: register cogs here
+bot.add_cog(ctf_manager.ctf_commands(bot))
 
 #: instead of manually removing tokens in each commit
 token = open('../Desktop/token').read()
-bot.add_cog(ctf_manager.Management(bot))
 bot.run(token)

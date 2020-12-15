@@ -4,6 +4,7 @@
 ## TO-DO
 	- change created CTF category permissions
 	- figure out error handling with bot commands
+	- rename cogs
 
 ## DONE
 	- grant entry role from reacting to bot message

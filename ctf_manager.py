@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Management(commands.Cog):
+class ctf_commands(commands.Cog):
 
 	def __init__(self, bot):
 
