@@ -5,6 +5,7 @@
 	- change created CTF category permissions
 	- figure out error handling with bot commands
 	- rename cogs
+        - add functionality to get assignments from lms
 
 ## DONE
 	- grant entry role from reacting to bot message

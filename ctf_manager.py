@@ -10,7 +10,7 @@ class ctf_commands(commands.Cog):
 	@commands.command(name = 'info')
 	async def info(self, ctx, *args):
 		await ctx.send(f'`[i] Channel: {ctx.channel}`')
-		
+
 		#: test to create an Embed object
 		await ctx.send(embed = discord.Embed(title = 'Test Title', description = 'Testing out how embeds work', colour = 0x2ecc71))
 
