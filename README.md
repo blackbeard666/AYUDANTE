@@ -12,3 +12,4 @@
 	- successfully created and called bot commands
 	- create a CTF category upon startup
 	- organize functions into cogs
+	- test if my new git config works
