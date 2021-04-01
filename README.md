@@ -2,10 +2,12 @@
 #### a side project aimed at creating a fully functional discord bot for ctf management; readme to be updated later
 
 ## TO-DO
+	- CREATE A HELP MESSAGE
 	- change created CTF category permissions
 	- figure out error handling with bot commands
 	- rename cogs
-        - add functionality to get assignments from lms
+    - add functionality to get assignments from lms
+    - create some sort of dashboard
 
 ## DONE
 	- grant entry role from reacting to bot message
