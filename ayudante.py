@@ -1,5 +1,6 @@
 import discord
 import ctf_manager
+import ctf_utilities
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix = '--')
@@ -14,7 +15,6 @@ async def on_ready():
     print(f'[i] Logged in as: {bot.user}')
 
     #: todo: add category permissions similar to LOBBY
-    #: I don't understand why placing this server variable outside of this function fails to get the server
     server = bot.get_guild(server_id)
     if 'robots.txt' not in [category.name for category in server.categories]:
 
@@ -33,6 +33,7 @@ async def on_ready():
 
 #: register cogs here
 bot.add_cog(ctf_manager.ctf_commands(bot))
+bot.add_cog(ctf_utilities.ctf_utils(bot))
 
 #: instead of manually removing tokens in each commit
 token = open('../Desktop/token').read()
